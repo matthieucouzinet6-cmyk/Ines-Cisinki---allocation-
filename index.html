@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ton allocation patrimoniale — 55 000 €</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --page:#eef3f0;
+    --ink:#0c1e17;
+    --muted:#6c7a73;
+    --mint-1:#a8e6c9;
+    --mint-2:#6bcf9e;
+    --gold-1:#e2b45c;
+    --gold-2:#b9862c;
+    --teal-1:#1c5a45;
+    --teal-2:#0d3328;
+    --radius:22px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--page);
+    color:var(--ink);
+    font-family:"Manrope", sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 24px 80px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    border-radius:var(--radius);
+    padding:52px 56px;
+    background:
+      radial-gradient(900px 420px at 88% -20%, rgba(143,220,182,0.20), transparent 60%),
+      linear-gradient(120deg, #123a2c 0%, #0a2118 55%, #061410 100%);
+    color:#fff;
+  }
+  .hero h1{
+    font-size:clamp(28px,3.6vw,38px);
+    font-weight:800;
+    margin:0 0 18px;
+    letter-spacing:-.01em;
+  }
+  .hero p{
+    font-size:16px;
+    line-height:1.65;
+    color:#cfe1d7;
+    max-width:660px;
+    margin:0 0 30px;
+    font-weight:400;
+  }
+  .pills{display:flex;flex-wrap:wrap;gap:12px;}
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    background:rgba(255,255,255,0.09);
+    border:1px solid rgba(255,255,255,0.14);
+    padding:10px 18px;
+    border-radius:999px;
+    font-size:13.5px;
+    font-weight:600;
+  }
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--mint-1);}
+  .pill b{font-weight:800;}
+
+  /* ---------- Horizon groups ---------- */
+  .horizons{
+    display:grid;
+    grid-template-columns:1fr 0.72fr 1fr;
+    gap:16px;
+    margin-top:24px;
+    align-items:stretch;
+  }
+  .hgroup{
+    background:#fff;
+    border:1px solid #e3e9e5;
+    border-radius:18px;
+    padding:20px 20px 22px;
+    display:flex;
+    flex-direction:column;
+  }
+  .hgroup .ghead{margin-bottom:16px;}
+  .hgroup .gtag{
+    font-size:10.5px;
+    font-weight:800;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .hgroup .gname{font-size:15px;font-weight:800;margin-top:4px;}
+  .hgroup .gmeta{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-top:8px;
+    font-size:13px;
+  }
+  .hgroup .gmeta .gtotal{font-weight:800;font-size:16px;}
+  .hgroup .gmeta .gpct{color:var(--muted);font-weight:600;}
+  .hgroup .cards{display:flex;flex-direction:column;gap:10px;flex:1;}
+
+  .stat-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:14px;
+    padding:16px 18px 18px;
+    color:#fff;
+    min-height:78px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .stat-card::after{
+    content:"";
+    position:absolute;
+    right:-24px;
+    bottom:-28px;
+    width:84px;
+    height:84px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.10);
+  }
+  .stat-card .lbl{
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    opacity:.85;
+  }
+  .stat-card .val{
+    margin-top:6px;
+    font-size:20px;
+    font-weight:800;
+    letter-spacing:-.01em;
+    position:relative;
+    z-index:1;
+  }
+  .stat-card .val small{font-size:13px;font-weight:700;}
+  .c-mint1{background:linear-gradient(140deg,#a8e6c9,#5cbf90);}
+  .c-mint2{background:linear-gradient(140deg,#6bcf9e,#2f8f6b);}
+  .c-gold{background:linear-gradient(140deg,#e2b45c,#a06e1f);flex:1;min-height:100%;}
+  .c-teal1{background:linear-gradient(140deg,#1c5a45,#0a2118);}
+  .c-teal2{background:linear-gradient(140deg,#0d3328,#020a07);}
+
+  /* ---------- Répartition (donut + supports côte à côte) ---------- */
+  .split{
+    display:grid;
+    grid-template-columns:360px 1fr;
+    gap:20px;
+    margin-top:20px;
+    align-items:start;
+  }
+  .donut-card{
+    background:#f4f8f6;
+    border:1px solid #dee6e1;
+    border-radius:var(--radius);
+    padding:28px 26px 30px;
+    position:sticky;
+    top:20px;
+  }
+  .donut-card .title{
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--teal-1);
+    margin-bottom:4px;
+  }
+  .donut-card .hint{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:22px;
+  }
+  .donut-wrap{
+    display:flex;
+    justify-content:center;
+    position:relative;
+  }
+  .donut-wrap svg{width:230px;height:230px;overflow:visible;}
+  .seg{
+    fill:none;
+    stroke-width:28;
+    cursor:pointer;
+    transition:stroke-width .18s ease, opacity .18s ease;
+  }
+  .seg.dim{opacity:.32;}
+  .seg.active{stroke-width:34;}
+  .donut-center{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    width:120px;
+    pointer-events:none;
+  }
+  .donut-center .amt{font-size:22px;font-weight:800;line-height:1.15;}
+  .donut-center .lbl{font-size:11.5px;color:var(--muted);margin-top:4px;font-weight:600;line-height:1.3;}
+
+  .rows{display:flex;flex-direction:column;gap:12px;}
+  .row-card{
+    background:#fff;
+    border:1.5px solid #e3e9e5;
+    border-radius:16px;
+    padding:18px 22px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    box-shadow:0 1px 2px rgba(12,30,23,0.03);
+    cursor:pointer;
+    transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .row-card.active{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+    background:color-mix(in srgb, var(--accent) 6%, #fff);
+  }
+  .row-card.dim{opacity:.5;}
+  .row-card .bar{width:4px;align-self:stretch;border-radius:4px;min-height:34px;}
+  .row-card .name{font-size:15px;font-weight:700;flex:1;}
+  .row-card .horizon{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+  .row-card .right{text-align:right;}
+  .row-card .amt{font-size:16px;font-weight:800;}
+  .row-card .pct{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px;}
+
+  /* ---------- DCA note ---------- */
+  .dca-note{
+    margin-top:20px;
+    background:#fff;
+    border:1px solid #e3e9e5;
+    border-radius:16px;
+    padding:20px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+  }
+  .dca-note .txt{font-size:14px;color:var(--ink);line-height:1.55;max-width:620px;}
+  .dca-note .txt b{color:var(--teal-1);}
+  .dca-note .badge{
+    background:var(--teal-2);
+    color:#fff;
+    padding:12px 20px;
+    border-radius:14px;
+    font-weight:800;
+    font-size:15px;
+    white-space:nowrap;
+  }
+
+  footer{
+    margin-top:26px;
+    font-size:11.5px;
+    line-height:1.6;
+    color:var(--muted);
+    padding:0 4px;
+  }
+
+  @media (max-width:900px){
+    .horizons{grid-template-columns:1fr;}
+    .split{grid-template-columns:1fr;}
+    .donut-card{position:static;}
+    .hero{padding:36px 26px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Ton allocation patrimoniale</h1>
+    <p>Ton versement de 55 000 € est structuré en trois strates : un socle sécurisé court terme (fonds euros et DNCA Alpha Bond A), une poche moyen terme au rendement encadré et partiellement protégé (Transitions Leaders), et une strate long terme orientée croissance (ETF et Helium Selection A).</p>
+    <div class="pills">
+      <span class="pill"><i class="dot"></i>Contrat Assurance-vie</span>
+      <span class="pill"><i class="dot"></i>Court terme <b>40%</b></span>
+      <span class="pill"><i class="dot"></i>Moyen terme <b>30%</b></span>
+      <span class="pill"><i class="dot"></i>Long terme <b>30%</b></span>
+      <span class="pill"><i class="dot"></i>Renta. nette de frais <b>7,17 %</b> / an</span>
+    </div>
+  </div>
+
+  <div class="horizons">
+    <div class="hgroup">
+      <div class="ghead">
+        <div class="gtag">Court terme · socle sécurisé</div>
+        <div class="gname">Sécurité &amp; liquidité</div>
+        <div class="gmeta"><span class="gtotal">22 000 €</span><span class="gpct">40% du total</span></div>
+      </div>
+      <div class="cards">
+        <div class="stat-card c-mint1">
+          <div class="lbl">Fonds Euros</div>
+          <div class="val">11 000 <small>€</small></div>
+        </div>
+        <div class="stat-card c-mint2">
+          <div class="lbl">DNCA Alpha Bond A</div>
+          <div class="val">11 000 <small>€</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hgroup">
+      <div class="ghead">
+        <div class="gtag">Moyen terme · rendement encadré</div>
+        <div class="gname">Produit protégé</div>
+        <div class="gmeta"><span class="gtotal">16 500 €</span><span class="gpct">30% du total</span></div>
+      </div>
+      <div class="cards">
+        <div class="stat-card c-gold">
+          <div class="lbl">Transitions Leaders</div>
+          <div class="val">16 500 <small>€</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hgroup">
+      <div class="ghead">
+        <div class="gtag">Long terme · croissance</div>
+        <div class="gname">Performance &amp; diversification</div>
+        <div class="gmeta"><span class="gtotal">16 500 €</span><span class="gpct">30% du total</span></div>
+      </div>
+      <div class="cards">
+        <div class="stat-card c-teal1">
+          <div class="lbl">ETF Actions</div>
+          <div class="val">11 000 <small>€</small></div>
+        </div>
+        <div class="stat-card c-teal2">
+          <div class="lbl">Helium Selection A</div>
+          <div class="val">5 500 <small>€</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="donut-card">
+      <div class="title">Répartition de l'allocation</div>
+      <div class="hint">Survole le graphique ou une ligne pour explorer</div>
+      <div class="donut-wrap">
+        <svg viewBox="0 0 200 200">
+          <g transform="rotate(-90 100 100)">
+            <circle class="seg" data-key="fonds-euro" cx="100" cy="100" r="70"
+              stroke="#a8e6c9" stroke-dasharray="85.6 354.2" stroke-dashoffset="0"></circle>
+            <circle class="seg" data-key="dnca" cx="100" cy="100" r="70"
+              stroke="#6bcf9e" stroke-dasharray="85.6 354.2" stroke-dashoffset="-87.96"></circle>
+            <circle class="seg" data-key="transitions" cx="100" cy="100" r="70"
+              stroke="#e2b45c" stroke-dasharray="128.9 311.0" stroke-dashoffset="-175.93"></circle>
+            <circle class="seg" data-key="etf" cx="100" cy="100" r="70"
+              stroke="#1c5a45" stroke-dasharray="85.6 354.2" stroke-dashoffset="-307.87"></circle>
+            <circle class="seg" data-key="helium" cx="100" cy="100" r="70"
+              stroke="#0d3328" stroke-dasharray="41.0 398.8" stroke-dashoffset="-395.83"></circle>
+          </g>
+        </svg>
+        <div class="donut-center" id="donutCenter">
+          <div class="amt" id="donutAmt">55k€</div>
+          <div class="lbl" id="donutLbl">Total investi</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rows" id="rows">
+      <div class="row-card" data-key="fonds-euro" style="--accent:#a8e6c9;">
+        <span class="bar" style="background:var(--mint-1);"></span>
+        <span class="name">Fonds Euros<div class="horizon">Court terme</div></span>
+        <span class="right"><div class="amt">11k€</div><div class="pct">20% du total</div></span>
+      </div>
+      <div class="row-card" data-key="dnca" style="--accent:#6bcf9e;">
+        <span class="bar" style="background:var(--mint-2);"></span>
+        <span class="name">DNCA Alpha Bond A<div class="horizon">Court terme</div></span>
+        <span class="right"><div class="amt">11k€</div><div class="pct">20% du total</div></span>
+      </div>
+      <div class="row-card" data-key="transitions" style="--accent:#e2b45c;">
+        <span class="bar" style="background:var(--gold-1);"></span>
+        <span class="name">Transitions Leaders<div class="horizon">Moyen terme · protégé</div></span>
+        <span class="right"><div class="amt">16,5k€</div><div class="pct">30% du total</div></span>
+      </div>
+      <div class="row-card" data-key="etf" style="--accent:#1c5a45;">
+        <span class="bar" style="background:var(--teal-1);"></span>
+        <span class="name">ETF (S&amp;P 500 / EM / Eurostoxx 50)<div class="horizon">Long terme</div></span>
+        <span class="right"><div class="amt">11k€</div><div class="pct">20% du total</div></span>
+      </div>
+      <div class="row-card" data-key="helium" style="--accent:#0d3328;">
+        <span class="bar" style="background:var(--teal-2);"></span>
+        <span class="name">Helium Selection A<div class="horizon">Long terme</div></span>
+        <span class="right"><div class="amt">5,5k€</div><div class="pct">10% du total</div></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="dca-note">
+    <div class="txt">En complément, un <b>versement programmé de 200 €/mois</b> vient renforcer la poche ETF, au même prorata que l'allocation initiale, pour lisser le prix d'achat moyen dans le temps.</div>
+    <div class="badge">200 €/mois</div>
+  </div>
+
+  <footer>
+    Hypothèse de rentabilité annuelle de 7,17%, nette de frais de gestion, retenue à titre indicatif et non contractuel. Les performances passées ne préjugent pas des performances futures. Hors fonds euros, tous les supports présentent un risque de perte en capital.
+  </footer>
+
+</div>
+
+<script>
+  const data = {
+    'fonds-euro':   { name:'Fonds Euros',            amt:'11 000 €', pct:'20% du total' },
+    'dnca':         { name:'DNCA Alpha Bond A',       amt:'11 000 €', pct:'20% du total' },
+    'transitions':  { name:'Transitions Leaders',     amt:'16 500 €', pct:'30% du total' },
+    'etf':          { name:'ETF Actions',             amt:'11 000 €', pct:'20% du total' },
+    'helium':       { name:'Helium Selection A',      amt:'5 500 €',  pct:'10% du total' },
+  };
+
+  const segs = document.querySelectorAll('.seg');
+  const rows = document.querySelectorAll('.row-card');
+  const donutAmt = document.getElementById('donutAmt');
+  const donutLbl = document.getElementById('donutLbl');
+
+  function setActive(key){
+    segs.forEach(s=>{
+      s.classList.toggle('active', s.dataset.key === key);
+      s.classList.toggle('dim', key && s.dataset.key !== key);
+    });
+    rows.forEach(r=>{
+      r.classList.toggle('active', r.dataset.key === key);
+      r.classList.toggle('dim', key && r.dataset.key !== key);
+    });
+    if(key && data[key]){
+      donutAmt.textContent = data[key].amt;
+      donutLbl.textContent = data[key].name + ' · ' + data[key].pct;
+    } else {
+      donutAmt.textContent = '55k€';
+      donutLbl.textContent = 'Total investi';
+    }
+  }
+
+  segs.forEach(s=>{
+    s.addEventListener('mouseenter', ()=> setActive(s.dataset.key));
+    s.addEventListener('mouseleave', ()=> setActive(null));
+  });
+  rows.forEach(r=>{
+    r.addEventListener('mouseenter', ()=> setActive(r.dataset.key));
+    r.addEventListener('mouseleave', ()=> setActive(null));
+  });
+</script>
+
+</body>
+</html>
